@@ -4,31 +4,32 @@ import java.util.*;
 public class SiteTree {
 	private SiteNode root;
 	private HashMap<SiteNode, Set<SiteNode>> tree;
+	private HashMap<String, SiteNode> nameMap;
 	
 	public SiteTree()
 	{
 		root = null;
 		tree = new HashMap<SiteNode, Set<SiteNode>>();
+		nameMap = new HashMap<String, SiteNode>();
 	}
 	
 	// returns the SiteNode matching this
 	// url path
-	public Set<SiteNode> get(String urlPath)
+	public SiteNode get(String urlPath)
 	{
-		// search by urlPath
-		SiteNode siteNode = new SiteNode(urlPath);
-		return tree.get(siteNode);
+		return nameMap.get(urlPath);
 	}
 	
 	public void add(SiteNode siteNode)
 	{
 		tree.put(siteNode, siteNode.getChildren());
-		//System.out.println(tree);
+		nameMap.put(siteNode.getUrlPath(), siteNode);
 	}
 	
 	public void remove(SiteNode siteNode)
 	{
 		tree.remove(siteNode);
+		nameMap.remove(siteNode.getUrlPath());
 	}
 	
 	public static void main(String[] args)
@@ -69,5 +70,9 @@ public class SiteTree {
 		System.out.println(node2.getAncestors());
 		System.out.println(node1.getAncestors());
 		System.out.println(node1.getDescendants());
+		
+		SiteNode siteNode = siteTree.get("my/profile");
+		if (siteNode != null)
+			System.out.println(siteNode.getDescendants());
 	}
 }

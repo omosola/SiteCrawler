@@ -80,6 +80,11 @@ public class SiteNode {
 		}
 	}
 	
+	public String getUrlPath()
+	{
+		return this.urlPath;
+	}
+	
 	@Override
 	public boolean equals(Object obj)
 	{
