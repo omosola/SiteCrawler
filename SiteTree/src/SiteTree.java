@@ -3,13 +3,13 @@ import java.util.*;
 
 public class SiteTree {
 	private SiteNode root;
-	private HashMap<SiteNode, Set<SiteNode>> tree;
+	//private HashMap<SiteNode, Set<SiteNode>> tree;
 	private HashMap<String, SiteNode> nameMap;
 	
 	public SiteTree()
 	{
 		root = null;
-		tree = new HashMap<SiteNode, Set<SiteNode>>();
+		//tree = new HashMap<SiteNode, Set<SiteNode>>();
 		nameMap = new HashMap<String, SiteNode>();
 	}
 	
@@ -22,13 +22,13 @@ public class SiteTree {
 	
 	public void add(SiteNode siteNode)
 	{
-		tree.put(siteNode, siteNode.getChildren());
+		//tree.put(siteNode, siteNode.getChildren());
 		nameMap.put(siteNode.getUrlPath(), siteNode);
 	}
 	
 	public void remove(SiteNode siteNode)
 	{
-		tree.remove(siteNode);
+		//tree.remove(siteNode);
 		nameMap.remove(siteNode.getUrlPath());
 	}
 	
@@ -47,7 +47,7 @@ public class SiteTree {
 		SiteNode node8 = new SiteNode("u/okeefe-okeefe");
 		
 		// add parent child relationships
-		
+
 		node1.addChild(node2);
 		node1.addChild(node3);
 		node1.addChild(node4);
@@ -71,7 +71,7 @@ public class SiteTree {
 		System.out.println(node1.getAncestors());
 		System.out.println(node1.getDescendants());
 		
-		SiteNode siteNode = siteTree.get("my/profile");
+		SiteNode siteNode = siteTree.get(".");
 		if (siteNode != null)
 			System.out.println(siteNode.getDescendants());
 	}
