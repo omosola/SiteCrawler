@@ -9,7 +9,7 @@ public class SiteTree {
 	public SiteTree()
 	{
 		root = null;
-		tree = new HashMap<SiteNode, Set<SiteNode>>();
+		//tree = new HashMap<SiteNode, Set<SiteNode>>();
 		nameMap = new HashMap<String, SiteNode>();
 	}
 	
@@ -20,16 +20,44 @@ public class SiteTree {
 		return nameMap.get(urlPath);
 	}
 	
+	public void setRoot(SiteNode node)
+	{
+		root = node;
+	}
+	
 	public void add(SiteNode siteNode)
 	{
-		tree.put(siteNode, siteNode.getChildren());
+		if (root == null) {
+			root = siteNode;
+		}
+		
 		nameMap.put(siteNode.getUrlPath(), siteNode);
+	}
+	
+	/**
+	 * 
+	 * @param urlPath
+	 */
+	public void add(String urlPath)
+	{
+		SiteNode node = new SiteNode(urlPath);
+		add(node);
 	}
 	
 	public void remove(SiteNode siteNode)
 	{
-		tree.remove(siteNode);
+		//tree.remove(siteNode);
 		nameMap.remove(siteNode.getUrlPath());
+	}
+	
+	public void remove(String urlPath)
+	{
+		nameMap.remove(urlPath);
+	}
+	
+	public SiteNode getRoot()
+	{
+		return root;
 	}
 	
 	public static void main(String[] args)
@@ -74,5 +102,10 @@ public class SiteTree {
 		SiteNode siteNode = siteTree.get("my/profile");
 		if (siteNode != null)
 			System.out.println(siteNode.getDescendants());
+	}
+	
+	@Override
+	public String toString() {
+		return nameMap.toString();
 	}
 }
