@@ -1,5 +1,14 @@
 import java.util.*;
 
+/**
+ * @author: Omosola Odetunde
+ * Date Created: 8/26/2013
+ * Last Updated: 8/26/2013
+ * 
+ * Adapted from the following Basic Example Code:
+ * https://code.google.com/p/crawler4j/source/browse/src/test/java/edu/uci/ics/crawler4j/examples/basic/BasicCrawler.java
+ **/
+
 public class SiteNode {
 	private SiteNode parent = null;
 	private Set<SiteNode> children = new HashSet<SiteNode>();
@@ -16,16 +25,6 @@ public class SiteNode {
 		child.setParent((SiteNode)this);
 		this.children.add(child);
 	}
-	
-	/*
-	public void addChildren(List<SiteNode> children)
-	{
-		for (SiteNode child : children)
-		{
-			this.addChild(child);
-		}
-	}
-	*/
 	
 	public void removeChild(SiteNode child)
 	{
@@ -102,9 +101,9 @@ public class SiteNode {
 		return 37 * result + this.urlPath.hashCode();
 	}
 	
+	@Override
 	public String toString()
 	{
-		// to implement
-		return urlPath;
+		return this.urlPath;
 	}
 }

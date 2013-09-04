@@ -7,10 +7,10 @@ import edu.uci.ics.crawler4j.url.WebURL;
 /**
  * @author: Omosola Odetunde
  * Date Created: 9/3/2013
+ * Last Updated: 9/4/2013
  * 
  * Adapted from the following Basic Example Code:
  * https://code.google.com/p/crawler4j/source/browse/src/test/java/edu/uci/ics/crawler4j/examples/basic/BasicCrawler.java
- * Last Updated: 9/3/2013
  **/
 
 public class SiteCrawler extends WebCrawler
@@ -18,11 +18,11 @@ public class SiteCrawler extends WebCrawler
 	private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|bmp|gif|jpe?g" + "|png|tiff?|mid|mp2|mp3|mp4"
             + "|wav|avi|mov|mpeg|ram|m4v|pdf" + "|rm|smil|wmv|swf|wma|zip|rar|gz))$");
 	
-	private SiteTree siteTree;
+	private SiteTreeWrapper siteTree;
 	
 	public SiteCrawler()
 	{
-		siteTree = new SiteTree();
+		siteTree = new SiteTreeWrapper();
 	}
 	
 	/**
@@ -30,7 +30,7 @@ public class SiteCrawler extends WebCrawler
 	 * data of this crawler when job is finished 
 	 */
 	@Override
-	public SiteTree getMyLocalData()
+	public SiteTreeWrapper getMyLocalData()
 	{
 		return siteTree;
 	}
@@ -72,19 +72,13 @@ public class SiteCrawler extends WebCrawler
 	 **/
 	@Override
 	public void visit(Page page)
-	{
-		System.out.println("Visiting a page with the following content");
+	{	
 		WebURL url = page.getWebURL();
-		System.out.println("url: " + url.getPath());
-		SiteNode node = new SiteNode(url.getPath());
-		siteTree.add(url.getPath());
-		System.out.println("Parent: " + url.getParentUrl());
+		
+		String childUrl = url.getURL();
 		String parentUrl = url.getParentUrl();
-		if (parentUrl == null) {
-			// if the parent doesn't exist
-		} else {
-			//
-		}
-		System.out.println("=================================================");
+		siteTree.createNode(childUrl, parentUrl);
+		
+		System.out.print(".");
 	}
 }

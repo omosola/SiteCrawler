@@ -9,7 +9,7 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 /**
  * @author: Omosola Odetunde
  * Date Created: 9/3/2013
- * Last Updated: 9/3/2013
+ * Last Updated: 9/4/2013
  * 
  * Adapted from the following Basic Example Code:
  * https://code.google.com/p/crawler4j/source/browse/src/test/java/edu/uci/ics/crawler4j/examples/basic/BasicCrawlController.java
@@ -45,7 +45,7 @@ public class SiteCrawlerController {
 		 * Be polite: Make sure that we don't send more than 1 request per
 		 * second (1000 milliseconds between requests)
 		 */
-		config.setPolitenessDelay(1000);
+		config.setPolitenessDelay(400);
 		
 		/*
 		 * You can set the maximum crawl depth here. The default value is -1
@@ -57,7 +57,7 @@ public class SiteCrawlerController {
 		 * You can set the maximum number of pages to crawl. The default value
 		 * is -1 for unlimited number of pages
 		 */
-		config.setMaxPagesToFetch(10);
+		config.setMaxPagesToFetch(50);
 		
 		/*
 		 * Do you need to set a proxy? If so, you can use:
@@ -97,9 +97,5 @@ public class SiteCrawlerController {
 		 * will reach the line after this only when crawling is finished
 		 */
 		controller.start(SiteCrawler.class, numberOfCrawlers);
-		
-		List<Object> localData = controller.getCrawlersLocalData();
-		System.out.println(localData);
-		//System.out.println(siteTree.getRoot());
 	}
 }
