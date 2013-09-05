@@ -1,5 +1,11 @@
 import java.io.Console;
 
+/**
+ * @author: Omosola Odetunde
+ * Date Created: 9/4/2013
+ * Last Updated: 9/5/2013
+ * 
+ **/
 
 public class QueryInterface
 {
@@ -22,12 +28,12 @@ public class QueryInterface
 		SiteTreeWrapper siteTree = new SiteTreeWrapper();
 		siteTree.load(siteTreeFilename);
 		
-		
 		Console c = System.console();
 		if (c == null) return;
 		
 		String input;
-		do
+		
+		while (true)
 		{
 			input = c.readLine("Enter a command\n");
 			// break user input on whitespaces
@@ -39,7 +45,7 @@ public class QueryInterface
 				case "childrenOf":
 				{
 					// TODO: Put in input check!
-					if (commandAndArgs.length != 2) return;
+					if (commandAndArgs.length != 2) break;
 					SiteNode node = siteTree.getNode(commandAndArgs[1]);
 					if (node == null)
 					{
@@ -47,16 +53,20 @@ public class QueryInterface
 					}
 					else
 					{
+						
+						System.out.print("> ");
 						for (SiteNode child : node.getChildren())
 						{
 							System.out.println(child);
 						}
 					}
-				};
+					System.out.println();
+					break;
+				}
 				case "parentOf":
 				{
 					// TODO: Put in input check!
-					if (commandAndArgs.length != 2) return;
+					if (commandAndArgs.length != 2) break;
 					SiteNode node = siteTree.getNode(commandAndArgs[1]);
 					if (node == null)
 					{
@@ -64,13 +74,15 @@ public class QueryInterface
 					}
 					else
 					{
-						System.out.println(node.getParent());
+						System.out.println("> " + node.getParent());
 					}
-				};
+					System.out.println();
+					break;
+				}
 				case "pathTo":
 				{
 					// TODO: Put in input check!
-					if (commandAndArgs.length != 2) return;
+					if (commandAndArgs.length != 2) break;
 					SiteNode node = siteTree.getNode(commandAndArgs[1]);
 					if (node == null)
 					{
@@ -78,27 +90,55 @@ public class QueryInterface
 					}
 					else
 					{
-						System.out.println(node.getAncestors());
+						System.out.print("> ");
+						for (SiteNode ancestor : node.getAncestors())
+						{
+							System.out.println(ancestor);
+						}
 					}
-				};
+					System.out.println();
+					break;
+				}
 				case "reachableFrom":
 				{
 					// TODO: Put in input check!
-					if (commandAndArgs.length != 2) return;
-					SiteNode node = siteTree.getNode(commandAndArgs[1]);
+					if (commandAndArgs.length != 2) break;
+					String nodeUrl = commandAndArgs[1];
+					SiteNode node;
+					if (nodeUrl.equals("."))
+					{
+						// get information from the root node
+						node = siteTree.getRoot();
+						System.out.println(node);
+					}
+					else 
+					{
+						node = siteTree.getNode(commandAndArgs[1]);
+					}
 					if (node == null)
 					{
 						System.out.println("This url is not within the site tree.");
 					}
 					else
 					{
-						System.out.println(node.getDescendants());
+						System.out.print("> ");
+						for (SiteNode descendant : node.getDescendants())
+						{
+							System.out.println(descendant);
+						}
 					}
+					System.out.println();
+					break;
+				}
+				case "exit":
+				{
+					System.out.println("Exiting");
+					return;
 				}
 				default: {
-					System.out.println();
+					System.out.println("Command not recognized, choose from reachableFrom/pathTo/childrenOf/parentOf <urlPath> OR exit\n");
 				}
 			}
-		} while(!input.toLowerCase().equals("exit"));
+		}
 	}
 }

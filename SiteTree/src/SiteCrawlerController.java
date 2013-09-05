@@ -9,7 +9,7 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 /**
  * @author: Omosola Odetunde
  * Date Created: 9/3/2013
- * Last Updated: 9/4/2013
+ * Last Updated: 9/5/2013
  * 
  * Adapted from the following Basic Example Code:
  * https://code.google.com/p/crawler4j/source/browse/src/test/java/edu/uci/ics/crawler4j/examples/basic/BasicCrawlController.java
@@ -23,6 +23,7 @@ public class SiteCrawlerController {
 			System.out.println("Needed paramters: ");
 			System.out.println("\t rootFolder (it will contain intermediate crawl data)");
 			System.out.println("\t numberOfCrawlers (number of concurrent threads)");
+			System.exit(1);
 		}
 		
 		/*
@@ -57,7 +58,7 @@ public class SiteCrawlerController {
 		 * You can set the maximum number of pages to crawl. The default value
 		 * is -1 for unlimited number of pages
 		 */
-		config.setMaxPagesToFetch(300);
+		config.setMaxPagesToFetch(1000);
 		
 		/*
 		 * Do you need to set a proxy? If so, you can use:
@@ -90,19 +91,23 @@ public class SiteCrawlerController {
 		 * URLs that are fetched and then the crawler starts following links
 		 * which are found in these pages
 		 */
-		controller.addSeed("http://rc.live.test.cheggnet.com/");
+		String seedUrl = "http://rc.live.test.cheggnet.com/";
+		controller.addSeed(seedUrl);
 		
 		/*
 		 * Start the crawl. This is a blocking operation, meaning your code
 		 * will reach the line after this only when crawling is finished
 		 */
 		
+		System.out.println("Crawling up to 1000 pages starting from " + seedUrl);
 		controller.start(SiteCrawler.class, numberOfCrawlers);
 
 		List<Object> localData = controller.getCrawlersLocalData();
 		if (localData != null && localData.get(0) instanceof SiteTreeWrapper) {
+			String siteTreeFilename = "logger.txt";
 			SiteTreeWrapper siteTree = (SiteTreeWrapper)localData.get(0);
-			siteTree.save("logger.txt");
+			System.out.println("Saving crawl tree to " + siteTreeFilename);
+			siteTree.save(siteTreeFilename);
 		}
 	}
 }
