@@ -57,7 +57,7 @@ public class SiteCrawlerController {
 		 * You can set the maximum number of pages to crawl. The default value
 		 * is -1 for unlimited number of pages
 		 */
-		config.setMaxPagesToFetch(50);
+		config.setMaxPagesToFetch(300);
 		
 		/*
 		 * Do you need to set a proxy? If so, you can use:
@@ -90,12 +90,19 @@ public class SiteCrawlerController {
 		 * URLs that are fetched and then the crawler starts following links
 		 * which are found in these pages
 		 */
-		controller.addSeed("http://www.chegg.com/");
+		controller.addSeed("http://rc.live.test.cheggnet.com/");
 		
 		/*
 		 * Start the crawl. This is a blocking operation, meaning your code
 		 * will reach the line after this only when crawling is finished
 		 */
+		
 		controller.start(SiteCrawler.class, numberOfCrawlers);
+
+		List<Object> localData = controller.getCrawlersLocalData();
+		if (localData != null && localData.get(0) instanceof SiteTreeWrapper) {
+			SiteTreeWrapper siteTree = (SiteTreeWrapper)localData.get(0);
+			siteTree.save("logger.txt");
+		}
 	}
 }

@@ -50,8 +50,9 @@ public class SiteTreeWrapper {
 	public String toString()
 	{
 		StringBuilder string = new StringBuilder();
+		if (this.root == null) return null;
 		string.append(this.root + " -> " + this.root.getChildren());
-		for (SiteNode child: root.getChildren()) {
+		for (SiteNode child: this.root.getChildren()) {
 			string.append("\n" + child + " -> " + child.getChildren());
 		}
 		return string.toString();

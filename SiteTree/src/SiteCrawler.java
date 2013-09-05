@@ -63,7 +63,7 @@ public class SiteCrawler extends WebCrawler
 	public boolean shouldVisit(WebURL url)
 	{
 		String href = url.getURL().toLowerCase();
-		return !FILTERS.matcher(href).matches() && href.startsWith("http://www.chegg.com/");
+		return !FILTERS.matcher(href).matches() && href.startsWith("http://rc.live.test.cheggnet.com/");
 	}
 	
 	/**
@@ -77,8 +77,15 @@ public class SiteCrawler extends WebCrawler
 		
 		String childUrl = url.getURL();
 		String parentUrl = url.getParentUrl();
+		if (childUrl.endsWith("/")) {
+			// remove the trailing forward slash, just to keep
+			// format consistent across site urls added to the tree
+			childUrl = childUrl.substring(0, childUrl.length() - 1);
+		}
+		if (parentUrl != null && parentUrl.endsWith("/")) {
+			parentUrl = parentUrl.substring(0, parentUrl.length() - 1);			
+		}
 		siteTree.createNode(childUrl, parentUrl);
-		
 		System.out.print(".");
 	}
 }
