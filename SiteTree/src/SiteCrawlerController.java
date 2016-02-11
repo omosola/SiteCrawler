@@ -91,7 +91,7 @@ public class SiteCrawlerController {
 		 * URLs that are fetched and then the crawler starts following links
 		 * which are found in these pages
 		 */
-		String seedUrl = "http://www.google.com";
+		String seedUrl = "http://www.example.com";
 		controller.addSeed(seedUrl);
 		
 		/*
